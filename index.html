@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Recomendación Vocacional — Descubre tu camino</title>
+<meta name="description" content="Descubre qué áreas vocacionales conectan con tus intereses, habilidades y preferencias.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Decoración de fondo global -->
+<div class="bg-decor" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+</div>
+
+<div class="app" id="app">
+
+  <!-- ============ PANTALLA 1 · INTRODUCCIÓN ============ -->
+  <section class="screen screen-intro active" id="screen-intro" aria-label="Introducción">
+    <div class="intro-floaties" aria-hidden="true">
+      <span class="floaty f1">💡</span>
+      <span class="floaty f2">✨</span>
+      <span class="floaty f3">♡</span>
+      <span class="floaty f4">✦</span>
+      <span class="floaty f5">➜</span>
+      <span class="floaty f6">✦</span>
+    </div>
+
+    <header class="intro-topbar">
+      <div class="intro-icon-bulb" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none">
+          <path d="M32 6a18 18 0 0 0-10 33c1.6 1.1 2.6 2.9 2.6 4.9V46h14.8v-2.1c0-2 1-3.8 2.6-4.9A18 18 0 0 0 32 6Z" fill="var(--yellow-pastel)" stroke="var(--purple-deep)" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M24.6 50.5h14.8M26.4 55h11.2" stroke="var(--purple-deep)" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M32 15v5M22 20l3 3M42 20l-3 3" stroke="var(--purple-deep)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="intro-tagline">Conócete,<br>explora,<br>elige. <span class="heart">♡</span></p>
+
+      <div class="intro-note-right">
+        <p>Porque tus intereses también son una forma de talento <span class="heart">♡</span></p>
+        <svg class="paper-plane" viewBox="0 0 60 60" width="46" height="46" fill="none" aria-hidden="true">
+          <path d="M6 30 54 8 34 54l-6-18-16-6Z" fill="var(--white)" stroke="var(--purple-deep)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M28 36 54 8" stroke="var(--purple-deep)" stroke-width="1.6"/>
+        </svg>
+      </div>
+    </header>
+
+    <div class="intro-hero">
+      <p class="hero-eyebrow">Sistema de recomendación</p>
+      <h1 class="hero-title">VOCACIONAL</h1>
+      <p class="hero-sub">— Descubre tu camino —</p>
+    </div>
+
+    <div class="intro-body">
+      <p class="intro-lead">Descubre qué áreas vocacionales conectan más con tus intereses, habilidades y preferencias.</p>
+
+      <div class="intro-chips">
+        <span class="chip">Dirigido a estudiantes de 9.º grado</span>
+        <span class="chip chip-alt">Tu futuro también se construye con lo que te gusta</span>
+      </div>
+
+      <button class="btn-primary btn-start" id="btn-start">
+        <span>Comenzar mi viaje</span>
+        <span aria-hidden="true">✨</span>
+      </button>
+
+      <p class="intro-footnote">30 preguntas · ~5 minutos · Tus respuestas no se comparten con nadie</p>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA 2 · TEST ============ -->
+  <section class="screen screen-test" id="screen-test" aria-label="Test vocacional">
+    <header class="test-header">
+      <p class="test-kicker">Descubramos lo que te mueve</p>
+      <div class="progress-row">
+        <span class="progress-num" id="progress-current">01</span>
+        <div class="progress-track" role="progressbar" id="progress-track" aria-valuemin="0" aria-valuemax="30" aria-valuenow="1">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-num progress-total">30</span>
+      </div>
+      <p class="test-motivation" id="test-motivation" aria-live="polite"></p>
+    </header>
+
+    <div class="test-card-wrap">
+      <div class="test-card" id="test-card">
+        <p class="question-label">¿Qué tanto te interesa esto?</p>
+        <h2 class="question-text" id="question-text">Cargando pregunta…</h2>
+
+        <div class="options-grid" id="options-grid" role="group" aria-label="Opciones de respuesta"></div>
+      </div>
+    </div>
+
+    <nav class="test-nav">
+      <button class="btn-nav btn-prev" id="btn-prev" aria-label="Pregunta anterior">
+        <span aria-hidden="true">←</span> Anterior
+      </button>
+      <button class="btn-primary btn-next" id="btn-next" disabled>
+        <span id="btn-next-label">Siguiente</span>
+        <span aria-hidden="true" id="btn-next-arrow">→</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- ============ PANTALLA 3 · PROCESAMIENTO ============ -->
+  <section class="screen screen-processing" id="screen-processing" aria-label="Procesando resultados">
+    <div class="processing-box">
+      <div class="loader-orbit" aria-hidden="true">
+        <span class="dot d1"></span>
+        <span class="dot d2"></span>
+        <span class="dot d3"></span>
+      </div>
+      <p class="processing-line" id="processing-line">Analizando tus respuestas…</p>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA 4 · RESULTADOS ============ -->
+  <section class="screen screen-results" id="screen-results" aria-label="Resultados">
+    <div class="results-inner">
+
+      <header class="results-header">
+        <p class="results-kicker">✨ Este es tu perfil</p>
+        <h2 class="results-title">Tu perfil vocacional</h2>
+        <p class="results-persona" id="results-persona"></p>
+      </header>
+
+      <!-- Área principal destacada -->
+      <article class="highlight-card" id="highlight-main">
+        <span class="highlight-tag">✦ Tu área principal</span>
+        <h3 class="highlight-area" id="main-area-name">—</h3>
+        <p class="highlight-percent"><span id="main-area-percent">0</span>% de afinidad</p>
+        <p class="highlight-desc" id="main-area-desc"></p>
+      </article>
+
+      <!-- Área secundaria -->
+      <article class="secondary-card" id="highlight-secondary">
+        <span class="secondary-tag">Tu área secundaria</span>
+        <h4 class="secondary-area" id="sec-area-name">—</h4>
+        <p class="secondary-percent"><span id="sec-area-percent">0</span>% de afinidad</p>
+        <p class="secondary-desc" id="sec-area-desc"></p>
+      </article>
+
+      <p class="tie-note" id="tie-note" hidden></p>
+
+      <!-- Gráfico radar -->
+      <section class="chart-section">
+        <h3 class="section-heading">Tu mapa de intereses</h3>
+        <div class="radar-wrap">
+          <svg id="radar-chart" viewBox="0 0 320 320" role="img" aria-label="Gráfico radar de las 7 áreas vocacionales"></svg>
+        </div>
+      </section>
+
+      <!-- Tarjetas de las 7 áreas -->
+      <section class="areas-section">
+        <h3 class="section-heading">Tu puntaje por área</h3>
+        <div class="areas-grid" id="areas-grid"></div>
+      </section>
+
+      <!-- Fortalezas -->
+      <section class="strengths-section">
+        <h3 class="section-heading">💡 Tus fortalezas</h3>
+        <ul class="strengths-list" id="strengths-list"></ul>
+      </section>
+
+      <!-- Opciones para explorar -->
+      <section class="careers-section">
+        <h3 class="section-heading">🎓 Opciones para explorar</h3>
+        <p class="careers-note">No son "la carrera que debes estudiar" — son algunas opciones que podrías explorar.</p>
+        <div class="careers-grid" id="careers-grid"></div>
+      </section>
+
+      <!-- Actividades -->
+      <section class="activities-section">
+        <h3 class="section-heading">🚀 Actividades que podrías explorar</h3>
+        <div class="activities-chips" id="activities-chips"></div>
+      </section>
+
+      <!-- Mensaje final -->
+      <section class="final-message">
+        <p class="final-equation">Capacidades + Intereses + Posibilidades</p>
+        <p class="final-equals">=</p>
+        <p class="final-result">Tu orientación vocacional</p>
+        <svg class="mountain-deco" viewBox="0 0 220 110" aria-hidden="true">
+          <path d="M4 100 55 34l18 20 27-40 40 62 36 24Z" fill="var(--purple-light)" opacity="0.55"/>
+          <path d="M30 100 78 46l20 22 30-36 44 68Z" fill="var(--purple-medium)"/>
+          <path d="M78 46 86 56 82 60 74 52Z" fill="var(--white)" opacity="0.6"/>
+          <rect x="76" y="20" width="2" height="18" fill="var(--purple-deep)"/>
+          <path d="M78 20 92 27 78 32Z" fill="var(--pink-pastel)"/>
+        </svg>
+        <p class="final-disclaimer">Este resultado es una guía para conocerte mejor, no una decisión definitiva sobre tu futuro.</p>
+      </section>
+
+      <div class="results-actions">
+        <button class="btn-ghost" id="btn-restart">🔄 Repetir test</button>
+        <button class="btn-ghost" id="btn-print">🖨️ Imprimir resultados</button>
+        <button class="btn-ghost" id="btn-share">📤 Compartir mi resultado</button>
+        <button class="btn-ghost" id="btn-home">⬆️ Volver al inicio</button>
+      </div>
+      <p class="share-feedback" id="share-feedback" aria-live="polite"></p>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
